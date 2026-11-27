@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GT-1000CORE | Tone Agent</title>
+  <style>
+    :root{color-scheme:dark;--bg:#090d17;--surface:#151c2b;--surface2:#1c2537;--border:#2c394d;--text:#edf2fa;--sub:#9ba9bf;--accent:#91e7bf;--orange:#ffbc7d;--red:#ff8c97}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 5% 0%,#1e3441 0%,transparent 43%),var(--bg);font:15px/1.5 system-ui,-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;color:var(--text)}
+    button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.48;cursor:wait}
+    .shell{max-width:1190px;margin:auto;padding:24px 24px 64px}.header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0 32px}
+    .brand{display:flex;align-items:center;gap:13px}.mark{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:var(--accent);color:#112520;font-weight:900;font-size:21px;box-shadow:0 8px 32px #91e7bf40}
+    h1{font-size:23px;letter-spacing:-.03em;margin:0;font-weight:800}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.18em;color:var(--accent);text-transform:uppercase}
+    .sub{color:var(--sub);font-size:13px}.badge{border:1px solid var(--border);background:#1a2637;border-radius:100px;padding:7px 12px;font-size:12px;white-space:nowrap}.badge.live{border-color:#457969;color:var(--accent)}
+    .hero{background:linear-gradient(100deg,#213948,#19243a 72%);border:1px solid #395064;border-radius:24px;padding:25px 29px;display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:18px}
+    .hero h2{font-size:26px;line-height:1.3;letter-spacing:-.03em;margin:7px 0}.hero p{color:#bdd0dc;max-width:720px;margin:0}.hero .icon{font-size:62px;opacity:.9;transform:rotate(-12deg)}
+    .layout{display:grid;grid-template-columns:1.14fr .86fr;gap:18px}.stack{display:grid;gap:18px;align-content:start}.panel{background:var(--surface);border:1px solid var(--border);border-radius:21px;padding:23px;box-shadow:0 16px 44px #0002}
+    .sectionhead{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.sectionhead h3{margin:0;font-size:17px}.step{background:#294f47;color:var(--accent);font-size:11px;font-weight:800;padding:4px 9px;border-radius:8px}
+    label{display:block;color:#b7c6d7;font-size:12px;margin:0 0 6px;font-weight:650}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{min-width:0}
+    select,textarea{border:1px solid #43516a;background:#101727;color:var(--text);padding:12px 13px;border-radius:11px;width:100%;outline:0}select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px #91e7bf1c}
+    textarea{min-height:111px;resize:vertical}.button{border:1px solid var(--border);border-radius:11px;padding:10px 15px;background:#253248;color:var(--text);font-weight:750}
+    .button.primary{background:var(--accent);border-color:var(--accent);color:#0b2821}.button.warn{background:#4f362c;color:#ffcb9e;border-color:#785039}.button.ghost{background:transparent}.button.small{font-size:12px;padding:8px 11px}
+    .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.chiprow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .chip{padding:6px 10px;background:#1b3440;border:1px solid #35515c;color:#b8e9da;border-radius:99px;font-size:12px}
+    .note{font-size:12px;color:var(--sub);margin:13px 0 0}.device-strip{display:flex;justify-content:space-between;align-items:center;border:1px solid #37475c;border-radius:12px;background:#111a29;padding:12px 15px;margin:15px 0}
+    .device-name{font-size:17px;font-weight:800}.smallcaps{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub)}
+    .status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:7px}
+    .params{display:grid;gap:12px}.param{display:grid;grid-template-columns:145px 1fr 42px;gap:11px;align-items:center;font-size:12px}.param-name{color:#c4d4e3}.bar{height:6px;background:#2b3649;border-radius:10px;overflow:hidden}.bar>i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,#468f89,var(--accent))}.param-val{text-align:right;font-weight:850;font-variant-numeric:tabular-nums}
+    .proposal-row{display:grid;grid-template-columns:1fr auto auto auto;gap:13px;align-items:center;border-bottom:1px solid var(--border);padding:11px 0;font-size:13px}.proposal-row b{color:var(--accent)}
+    .proposal-row .arrow{color:var(--sub)}.proposal-title{font-weight:800;font-size:14px}.proposal-desc{color:var(--sub);font-size:13px;margin:10px 0 5px}
+    .check{display:flex;align-items:flex-start;gap:10px;margin:17px 0;color:#c4d2e1;font-size:12px}.check input{accent-color:#91e7bf;width:17px;height:17px;margin:2px 0 0}
+    .empty{padding:29px 17px;text-align:center;background:#111a29;border:1px dashed #344258;color:var(--sub);font-size:13px;border-radius:13px}
+    .notice{border:1px solid #526c66;background:#1b3735;padding:11px 15px;border-radius:11px;color:#cff8e5;font-size:13px;margin:0 0 18px;display:none}.notice.err{border-color:#a75a61;background:#42242d;color:#ffc3c7}
+    .footer{font-size:11px;color:#7e8ca0;margin:25px 1px}#spinner{display:none;color:var(--accent);font-size:12px}.switches{display:flex;gap:5px;flex-wrap:wrap}.switch{font-size:10px;padding:4px 7px;border-radius:6px;background:#222c3b;color:#7b8b9f}.switch.on{background:#23453d;color:var(--accent)}
+    @media(max-width:860px){.layout{grid-template-columns:1fr}.hero .icon{display:none}.header{align-items:flex-start}.hero{padding:22px}.shell{padding:12px 14px 35px}}
+    @media(max-width:450px){.fields{grid-template-columns:1fr}.param{grid-template-columns:125px 1fr 37px}.proposal-row{gap:7px}.header{flex-direction:column;gap:12px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="header"><div class="brand"><div class="mark">G</div><div><div class="eyebrow">Local guitar intelligence</div><h1>GT-1000CORE <span style="color:var(--accent)">Tone Agent</span></h1></div></div><span id="connection" class="badge">● DEMO / 未接続</span></header>
+    <section class="hero"><div><div class="eyebrow">Your sound, your control</div><h2>言葉から、ギターの音を変える。</h2><p>GT-1000COREのパッチを読み取り、OllamaのローカルAIが変更案を作成。試す前に必ず差分を確認できるセーフティ重視のエディタです。</p></div><div class="icon" aria-hidden="true">🎛️</div></section>
+    <div id="notice" class="notice" role="status" aria-live="polite"></div>
+    <div class="layout">
+      <div class="stack">
+        <section class="panel">
+          <div class="sectionhead"><h3>接続とパッチ読み込み</h3><span class="step">01 · CONNECT</span></div>
+          <div class="fields"><div class="field"><label for="inputPort">MIDI入力ポート</label><select id="inputPort"><option value="">デモモード</option></select></div><div class="field"><label for="outputPort">MIDI出力ポート</label><select id="outputPort"><option value="">デモモード</option></select></div></div>
+          <div class="actions"><button class="button" id="refreshPorts">ポートを再検索</button><button class="button" id="connectBtn">接続切り替え</button><button class="button primary" id="readBtn">パッチを読み込む</button></div>
+          <p class="note">初期状態は完全なデモ。実機操作はMIDIポートを両方選び、認識が成功した場合だけ可能です。</p>
+          <div class="device-strip"><div><div class="smallcaps">Current patch</div><div class="device-name" id="patchName">未読み込み</div></div><div style="text-align:right"><div class="smallcaps">Device</div><div id="deviceLabel" class="sub">DEMO</div></div></div>
+          <div class="smallcaps" style="margin-bottom:8px">Block status · reference only</div><div id="switches" class="switches"><span class="sub">未取得</span></div>
+        </section>
+        <section class="panel">
+          <div class="sectionhead"><h3>音作りを指示する</h3><span class="step">02 · DESCRIBE</span></div>
+          <label for="goal">どんな音を作りたい？</label>
+          <textarea id="goal" maxlength="500" placeholder="例：9mmのギターボーカルで使いたい。歪みの輪郭を保ちながら、中域がバンドで抜けるように調整して。">9mmのギターボーカル用に、鋭く抜ける歪み。低域の濁りを減らして中域を前に出したい。</textarea>
+          <div class="chiprow"><button class="chip" data-goal="9mmのギターボーカル用に、鋭く抜ける歪みにしたい">9mm / エッジ</button><button class="chip" data-goal="SUGIZOのように奥行きのある空間系サウンドを研究したい">SUGIZO / 空間系</button><button class="chip" data-goal="クリーンで明瞭なアルペジオ向けに調整したい">クリーン</button></div>
+          <div class="field" style="margin-top:18px"><label for="model">提案エンジン</label><select id="model"><option value="rules">デモルール（AIなし・試用向け）</option></select></div>
+          <div class="actions"><button id="suggestBtn" class="button primary">変更案を生成</button><button id="refreshModels" class="button ghost">Ollamaモデルを再検索</button><span id="spinner">処理中…</span></div>
+          <p class="note">AI利用時もパラメーターの許可リスト・値域・1回の変更幅を検証します。AIは直接機材に書き込みません。</p>
+        </section>
+        <section class="panel">
+          <div class="sectionhead"><h3>変更案の確認</h3><span class="step">03 · APPROVE</span></div>
+          <div id="proposal"><div class="empty">まずパッチを読み込み、音作りを指示してください。<br>変更前後の数値がここに表示されます。</div></div>
+          <label class="check"><input id="confirm" type="checkbox"><span>変更内容を確認しました。音量を下げ、演奏中・録音中ではない状態で一時パッチに反映します。</span></label>
+          <div class="actions"><button id="applyBtn" class="button primary" disabled>確認して反映</button><button id="undoBtn" class="button warn" disabled>直前の変更を戻す</button></div>
+          <p class="note">本体のユーザーパッチへの保存は行いません。反映後に試聴してから、必要に応じて本体またはBOSS TONE STUDIOで保存してください。</p>
+        </section>
+      </div>
+      <aside class="stack">
+        <section class="panel"><div class="sectionhead"><h3>現在のパラメーター</h3><span class="step">READ ONLY</span></div><div id="params" class="params"><div class="empty">未読み込み</div></div></section>
+        <section class="panel"><div class="sectionhead"><h3>この試作の安全設計</h3><span class="step">GUARDRAILS</span></div>
+          <div class="sub" style="line-height:2">
+            <div>✓ 公式MIDI仕様に掲載された項目だけ制御</div>
+            <div>✓ 書き込みは一時パッチに限定</div>
+            <div>✓ AI生成後、必ず人間が確認</div>
+            <div>✓ 反映直前に変更元の値を再検証</div>
+            <div>✓ 反映後に読み戻しとUndo</div>
+            <div>✓ 通信先はローカルのOllamaのみ</div>
+          </div>
+        </section>
+      </aside>
+    </div>
+    <div class="footer">Unofficial prototype · Not affiliated with BOSS/Roland · No physical-device verification yet · GT-1000CORE MIDI Implementation (Mar 2026)</div>
+  </main>
+  <script>
+  (()=>{
+    let state=null,busy=false;
+    const $=(id)=>document.getElementById(id);
+    const notice=(msg,error=false)=>{const el=$('notice');el.style.display='block';el.className='notice'+(error?' err':'');el.textContent=msg};
+    async function api(path,body){const options=body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)};const res=await fetch('/api/'+path,options);const json=await res.json();if(!res.ok)throw new Error(json.error||'エラー');return json}
+    async function work(action){if(busy)return;busy=true;$('spinner').style.display='inline';renderButtons();try{await action()}catch(e){notice(e.message||String(e),true)}finally{busy=false;$('spinner').style.display='none';renderButtons()}}
+    function renderButtons(){const can=!!state?.proposal,undo=!!state?.undo_available;$('applyBtn').disabled=busy||!can||!$('confirm').checked;$('undoBtn').disabled=busy||!undo;for(const id of ['readBtn','connectBtn','suggestBtn','refreshPorts','refreshModels'])$(id).disabled=busy}
+    function render(){if(!state)return;const live=state.mode==='midi';$('connection').textContent=live?'● GT-1000CORE / MIDI接続':'● DEMO / 実機未接続';$('connection').className='badge'+(live?' live':'');$('deviceLabel').textContent=live?'USB MIDI / ID '+state.device_id:'DEMO';$('patchName').textContent=state.patch_name||'未読み込み';
+      $('switches').replaceChildren();const sw=state.switches||{};if(!Object.keys(sw).length){$('switches').textContent='未取得'}else for(const [key,value]of Object.entries(sw)){const e=document.createElement('span');e.className='switch'+(value?' on':'');e.textContent=key.toUpperCase()+' '+(value?'ON':'OFF');$('switches').append(e)}
+      $('params').replaceChildren();if(!state.values){$('params').innerHTML='<div class="empty">パッチを読み込むと現在の数値を表示します。</div>'}else for(const p of state.parameters){const row=document.createElement('div');row.className='param';const name=document.createElement('span');name.className='param-name';name.textContent=p.name;const bar=document.createElement('div');bar.className='bar';const fill=document.createElement('i');fill.style.width=(100*(state.values[p.key]-p.min)/(p.max-p.min))+'%';bar.append(fill);const value=document.createElement('span');value.className='param-val';value.textContent=state.values[p.key];row.append(name,bar,value);$('params').append(row)}
+      $('proposal').replaceChildren();if(!state.proposal){$('proposal').innerHTML='<div class="empty">変更案はまだありません。</div>'}else{const desc=document.createElement('p');desc.className='proposal-desc';desc.textContent=state.proposal.reason;$('proposal').append(desc);for(const change of state.proposal.changes){const row=document.createElement('div');row.className='proposal-row';const name=document.createElement('span');name.className='proposal-title';name.textContent=change.name;const before=document.createElement('span');before.textContent=change.before;const arrow=document.createElement('span');arrow.className='arrow';arrow.textContent='→';const after=document.createElement('b');after.textContent=change.after;row.append(name,before,arrow,after);$('proposal').append(row)}}
+      $('confirm').checked=false;renderButtons();
+    }
+    async function ports(){const data=await api('ports');for(const [id,items]of [['inputPort',data.inputs],['outputPort',data.outputs]]){const select=$(id);select.replaceChildren(new Option('デモモード',''));for(const item of items)select.add(new Option(item,item))}if(!data.installed)notice('MIDIライブラリが未導入です。デモはそのまま動きます。実機接続には pip install -r requirements.txt が必要です。')}
+    async function models(){const data=await api('models');const e=$('model'),selected=e.value;e.replaceChildren(new Option('デモルール（AIなし・試用向け）','rules'));for(const model of data.models)e.add(new Option('Ollama · '+model,model));if([...e.options].some(x=>x.value===selected))e.value=selected}
+    $('refreshPorts').onclick=()=>work(ports);$('refreshModels').onclick=()=>work(async()=>{await models();notice('ローカルOllamaモデルを再検索しました。')});
+    $('connectBtn').onclick=()=>work(async()=>{const input=$('inputPort').value,output=$('outputPort').value;if(Boolean(input)!==Boolean(output))throw new Error('入力と出力を両方選んでください');state=await api('connect',{input,output});render();notice(input?'GT-1000/COREからMIDI Identity Replyを確認しました。続けてパッチを読み込んでください。':'デモモードに切り替えました。')});
+    $('readBtn').onclick=()=>work(async()=>{state=await api('read',{});render();notice('パッチの読み込みが完了しました。変更案を生成できます。')});
+    $('suggestBtn').onclick=()=>work(async()=>{state=await api('suggest',{goal:$('goal').value,model:$('model').value});render();notice('変更案を生成しました。差分を確認してから反映してください。')});
+    $('applyBtn').onclick=()=>work(async()=>{if(!$('confirm').checked||!state?.proposal)throw new Error('変更案を確認してください');state=await api('apply',{proposal_id:state.proposal.id,confirmed:true});render();notice('一時パッチへの変更と読み戻しが完了しました。試聴して比較してください。')});
+    $('undoBtn').onclick=()=>work(async()=>{if(!window.confirm('直前の変更を元に戻しますか？'))return;state=await api('undo',{confirmed:true});render();notice('直前の変更を復元しました。')});
+    $('confirm').onchange=renderButtons;for(const e of document.querySelectorAll('[data-goal]'))e.onclick=()=>{$('goal').value=e.dataset.goal};
+    work(async()=>{state=await api('status');render();await Promise.all([ports(),models()])});
+  })();
+  </script>
+</body>
+</html>
